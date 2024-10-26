@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.Scanner;
 
 import entities.Account;
+import exceptions.BusinessException;
 
 public class Program {
 	public static void main(String[] args) {
@@ -29,18 +30,13 @@ public class Program {
 		System.out.print("Informe uma quantia para sacar: ");
 		double amount = sc.nextDouble();
 		
-		if(amount > acc.getWithdrawLimit()) {
-			System.out.println("Erro de saque: A quantia excede o limite de saque");
-		}
-		else if (amount > acc.getBalance()) {
-			System.out.println("Erro de saque: Saldo insuficiente");
-		}
-		
-		else {
+		try{
 			acc.withdraw(amount);
 			System.out.printf("Novo saldo: %.2f%n", + acc.getBalance());
 		}
-		
+		catch(BusinessException e) {
+			System.out.println(e.getMessage());
+		}
 		sc.close();
 	}
 			
